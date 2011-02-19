@@ -3,6 +3,7 @@ package com.rkovacevic;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -43,8 +44,9 @@ public class TestEJBTest {
 	public void testGetVisits() {
 		List<Visit> visitList = Util.createTestVisitList();
 		Query mockQuery = getQueryThatReturnsList(visitList);
-		when(testEjb.entityManager.createQuery(anyString())).thenReturn(mockQuery);
+		when(testEjb.entityManager.createNamedQuery(anyString())).thenReturn(mockQuery);
 		assertEquals(visitList, testEjb.getVisits());
+		verify(testEjb.entityManager).createNamedQuery(eq(Visit.ALL));
 	}
 
 	private Query getQueryThatReturnsList(List<?> list) {

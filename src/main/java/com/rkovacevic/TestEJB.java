@@ -21,6 +21,6 @@ public class TestEJB {
 	
 	@SuppressWarnings("unchecked")
 	public List<Visit> getVisits() {
-		return entityManager.createQuery("select v from Visit v").getResultList();
+		return entityManager.createNamedQuery(Visit.ALL).getResultList();
 	}
 }
