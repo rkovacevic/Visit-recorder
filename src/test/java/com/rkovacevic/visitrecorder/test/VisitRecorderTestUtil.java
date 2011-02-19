@@ -1,10 +1,12 @@
-package com.rkovacevic;
+package com.rkovacevic.visitrecorder.test;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public enum Util {
+import com.rkovacevic.visitrecorder.model.Visit;
+
+public enum VisitRecorderTestUtil {
 	;
 
 	public static List<Visit> createTestVisitList() {

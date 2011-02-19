@@ -1,4 +1,4 @@
-package com.rkovacevic;
+package com.rkovacevic.visitrecorder.test;
 
 import org.junit.Ignore;
 import org.junit.experimental.theories.Theories;

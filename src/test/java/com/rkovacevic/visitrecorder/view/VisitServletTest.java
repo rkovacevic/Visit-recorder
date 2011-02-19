@@ -1,4 +1,4 @@
-package com.rkovacevic;
+package com.rkovacevic.visitrecorder.view;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -18,14 +18,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-public class TestServletTest {
+import com.rkovacevic.visitrecorder.bean.VisitsBean;
+import com.rkovacevic.visitrecorder.model.Visit;
+import com.rkovacevic.visitrecorder.test.VisitRecorderTestUtil;
+import com.rkovacevic.visitrecorder.view.VisitsServlet;
 
-	private TestServlet testServlet = new TestServlet();
+public class VisitServletTest {
+
+	private VisitsServlet visitsServlet = new VisitsServlet();
 	
 	private ServletRequest request = mock(ServletRequest.class);
 	private ServletResponse response = mock(ServletResponse.class);
 	
-	private static final List<Visit> visitList = Util.createTestVisitList();
+	private static final List<Visit> visitList = VisitRecorderTestUtil.createTestVisitList();
 	
 	@Before
 	public void injectEjbAndInvokeServlet() throws IOException, ServletException {
@@ -34,15 +39,15 @@ public class TestServletTest {
 	}
 
 	private void injectEjb() {
-		TestEJB testEjb = mock(TestEJB.class);
-		testServlet.testEjb = testEjb;
-		when(testServlet.testEjb.getVisits()).thenReturn(visitList);
+		VisitsBean visitsBean = mock(VisitsBean.class);
+		visitsServlet.visits = visitsBean;
+		when(visitsServlet.visits.getVisits()).thenReturn(visitList);
 	}
 	
 	private void invokeServlet() throws IOException, ServletException {
 		PrintWriter mockPrintWriter = mock(PrintWriter.class);
 		when(response.getWriter()).thenReturn(mockPrintWriter);
-		testServlet.service(request, response);
+		visitsServlet.service(request, response);
 	}
 	
 	@Test
@@ -54,6 +59,6 @@ public class TestServletTest {
 	
 	@Test
 	public void verifyThatRecordVisitIsInvokedOnce() {
-		verify(testServlet.testEjb, times(1)).recordVisit();
+		verify(visitsServlet.visits, times(1)).recordVisit();
 	}
 }

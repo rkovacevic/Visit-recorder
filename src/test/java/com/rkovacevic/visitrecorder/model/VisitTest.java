@@ -1,6 +1,9 @@
-package com.rkovacevic;
+package com.rkovacevic.visitrecorder.model;
 
 import org.junit.experimental.theories.DataPoint;
+
+import com.rkovacevic.visitrecorder.model.Visit;
+import com.rkovacevic.visitrecorder.test.ObjectTest;
 
 
 public class VisitTest extends ObjectTest {

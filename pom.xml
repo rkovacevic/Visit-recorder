@@ -2,9 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.rkovacevic</groupId>
-	<artifactId>mockito-test</artifactId>
+	<artifactId>visit-recorder</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Testing EJBs with JUnit and Mockito demo</name>
+	<name>Visit recorder</name>
+	<description>Demo app that will record visits to a servlet. Shows how to test Java EE components with JUnit and Mockito.</description>
 	<packaging>war</packaging>
 
 	<properties>
@@ -55,7 +56,7 @@
 	</repositories>
 
 	<build>
-		<finalName>mockito-test</finalName>
+		<finalName>visit-recorder</finalName>
 		<plugins>
 			<!-- Facilitates downloading source and javadoc in Eclipse -->
 			<plugin>

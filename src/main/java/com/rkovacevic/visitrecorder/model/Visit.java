@@ -1,4 +1,4 @@
-package com.rkovacevic;
+package com.rkovacevic.visitrecorder.model;
 
 import java.util.Date;
 
@@ -26,20 +26,20 @@ public class Visit {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date visitTime;
 
+	public Long getId() {
+		return id;
+	}
+
+	void setId(Long id) {
+		this.id = id;
+	}
+	
 	public Date getVisitTime() {
 		return visitTime;
 	}
 
 	public void setVisitTime(Date visitTime) {
 		this.visitTime = visitTime;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.rkovacevic;
+package com.rkovacevic.visitrecorder.bean;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -19,34 +19,38 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
-public class TestEJBTest {
+import com.rkovacevic.visitrecorder.bean.VisitsBean;
+import com.rkovacevic.visitrecorder.model.Visit;
+import com.rkovacevic.visitrecorder.test.VisitRecorderTestUtil;
+
+public class VisitsBeanTest {
 	
-	private TestEJB testEjb = new TestEJB();
+	private VisitsBean visitsBean = new VisitsBean();
 	
 	@Before
 	public void injectMockEntityManager() {
 		EntityManager entityManager = mock(EntityManager.class);
-		testEjb.entityManager = entityManager;
+		visitsBean.entityManager = entityManager;
 	}
 	
 	@Test
 	public void testRecordVisit() {
-		testEjb.recordVisit();
+		visitsBean.recordVisit();
 		
-		ArgumentCaptor<Visit> visitCaptor = ArgumentCaptor.forClass(Visit.class);
-		verify(testEjb.entityManager, atLeastOnce()).persist(visitCaptor.capture());
+		ArgumentCaptor<Visit> persistedVisit = ArgumentCaptor.forClass(Visit.class);
+		verify(visitsBean.entityManager, atLeastOnce()).persist(persistedVisit.capture());
 		
-		long visitTimeInMillis = visitCaptor.getValue().getVisitTime().getTime();
+		long visitTimeInMillis = persistedVisit.getValue().getVisitTime().getTime();
 		assertTrue("Visit time not set correctly", System.currentTimeMillis() - visitTimeInMillis < TimeUnit.SECONDS.toMillis(1));
 	}
 
 	@Test
 	public void testGetVisits() {
-		List<Visit> visitList = Util.createTestVisitList();
+		List<Visit> visitList = VisitRecorderTestUtil.createTestVisitList();
 		Query mockQuery = getQueryThatReturnsList(visitList);
-		when(testEjb.entityManager.createNamedQuery(anyString())).thenReturn(mockQuery);
-		assertEquals(visitList, testEjb.getVisits());
-		verify(testEjb.entityManager).createNamedQuery(eq(Visit.ALL));
+		when(visitsBean.entityManager.createNamedQuery(anyString())).thenReturn(mockQuery);
+		assertEquals(visitList, visitsBean.getVisits());
+		verify(visitsBean.entityManager).createNamedQuery(eq(Visit.ALL));
 	}
 
 	private Query getQueryThatReturnsList(List<?> list) {
