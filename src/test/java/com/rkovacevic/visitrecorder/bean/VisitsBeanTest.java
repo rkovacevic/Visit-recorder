@@ -38,17 +38,20 @@ public class VisitsBeanTest {
 		visitsBean.recordVisit();
 		
 		ArgumentCaptor<Visit> persistedVisit = ArgumentCaptor.forClass(Visit.class);
-		verify(visitsBean.entityManager, atLeastOnce()).persist(persistedVisit.capture());
+		verify(visitsBean.entityManager, atLeastOnce())
+		.persist(persistedVisit.capture());
 		
 		long visitTimeInMillis = persistedVisit.getValue().getVisitTime().getTime();
-		assertTrue("Visit time not set correctly", System.currentTimeMillis() - visitTimeInMillis < TimeUnit.SECONDS.toMillis(1));
+		assertTrue("Visit time not set correctly", 
+				System.currentTimeMillis() - visitTimeInMillis < TimeUnit.SECONDS.toMillis(1));
 	}
 
 	@Test
 	public void testGetVisits() {
 		List<Visit> visitList = VisitRecorderTestUtil.createTestVisitList();
 		Query mockQuery = getQueryThatReturnsList(visitList);
-		when(visitsBean.entityManager.createNamedQuery(anyString())).thenReturn(mockQuery);
+		when(visitsBean.entityManager.createNamedQuery(anyString()))
+		.thenReturn(mockQuery);
 		assertEquals(visitList, visitsBean.getVisits());
 		verify(visitsBean.entityManager).createNamedQuery(eq(Visit.ALL));
 	}

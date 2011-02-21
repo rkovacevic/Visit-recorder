@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Trying to setup per application logging, but, alas, it doesn't work.. see: 
+	https://issues.jboss.org/browse/JBLOGGING-56 -->
+
+<logging xmlns="urn:jboss:logging:6.0" context="visit-recorder">
+
+	<!-- ~ This element, in conjunction with the "context" attribute above, 
+		tells the ~ logging system that I want my own separate logging environment. -->
+	<define-context name="visit-recorder" />
+
+	<!-- Just an example handler. -->
+	<file-handler file-name="/tmp/visit-recorder.log" name="FILE"
+		autoflush="true" append="true">
+		<formatter>
+			<pattern-formatter pattern="%d %-5p [%c] (%t) %s%E%n" />
+		</formatter>
+
+		<properties>
+			<property name="encoding">UTF-8</property>
+		</properties>
+	</file-handler>
+
+
+	<logger category="com.rkovacevic">
+		<level name="INFO" />
+	</logger>
+
+
+	<!-- Configure the root logger with my handler from above -->
+	<root-logger>
+		<level name="DEBUG" />
+		<handlers>
+			<handler-ref name="FILE" />
+		</handlers>
+	</root-logger>
+</logging>
